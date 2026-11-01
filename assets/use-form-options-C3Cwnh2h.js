@@ -1,0 +1,1 @@
+import{u as e}from"./useQuery-BLQltQiJ.js";import{n as t,g as n}from"./index-yjl5crCj.js";function o(){return n("/form-options")}function m(r){return t("/members",r)}function u(){return e({queryKey:["form-options"],queryFn:o,staleTime:1/0,gcTime:1/0,retry:0})}export{m as c,u};

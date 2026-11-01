@@ -1,0 +1,1 @@
+import{j as o}from"./react-2nURMTrA.js";import{c as s}from"./index-yjl5crCj.js";function n({className:t,...e}){return o.jsx("div",{"data-slot":"skeleton",className:s("animate-pulse rounded-md bg-muted",t),...e})}export{n as S};
