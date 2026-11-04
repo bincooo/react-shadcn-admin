@@ -1,0 +1,5 @@
+dist
+node_modules
+.agents
+pnpm-lock.yaml
+src/i18n/locales/*.json

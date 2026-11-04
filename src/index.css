@@ -1,0 +1,569 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist/wght.css';
+
+/*
+ * Geist 纵向度量校正：
+ * Geist 的 ascent/descent 为 100.5% / 29.5%，以它为主字体的 strut 决定基线位置，
+ * 而 CJK 回退字形（PingFang SC / Microsoft YaHei / Noto Sans CJK）的墨迹相对该
+ * 基线整体偏上，在按钮、标签等 flex 垂直居中容器里肉眼可见（小字号最明显）。
+ * 这里用同名字体的覆盖声明把基线下移 2%（总度量保持 130% 不变，行高与布局不受影响）。
+ * 必须位于上面的 @import 之后，后声明的 @font-face 才能覆盖同族同 unicode-range 的字面。
+ */
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-latin-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+}
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-latin-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+}
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-cyrillic-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+}
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-cyrillic-ext-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+}
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('@fontsource-variable/geist/files/geist-vietnamese-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range:
+    U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1,
+    U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323-0329,
+    U+1EA0-1EF9, U+20AB;
+  ascent-override: 102.5%;
+  descent-override: 27.5%;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * 设计令牌对齐 antd v5：
+ *   文字  rgba(0,0,0,.88) / .65 / .25
+ *   描边  #d9d9d9（主）/ #f0f0f0（次）
+ *   填充  rgba(0,0,0,.04) / .06 / .15
+ *   圆角  基础 6px
+ *
+ * 变量名与 shadcn 约定一致，主题面板通过 applyTheme() 覆写这些值，
+ * 因此组件与图表无需感知主题逻辑。
+ */
+:root {
+  --radius: 0.375rem;
+
+  /* ---- 基础色 ---- */
+  --background: #ffffff;
+  --foreground: rgba(0, 0, 0, 0.88);
+  --card: #ffffff;
+  --card-foreground: rgba(0, 0, 0, 0.88);
+  --popover: #ffffff;
+  --popover-foreground: rgba(0, 0, 0, 0.88);
+  --primary: #1677ff;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: rgba(0, 0, 0, 0.88);
+  --muted: #f5f5f5;
+  --muted-foreground: rgba(0, 0, 0, 0.65);
+  --accent: #f5f5f5;
+  --accent-foreground: rgba(0, 0, 0, 0.88);
+
+  /* ---- 状态色（antd 文本色板，浅底上仍可读） ---- */
+  --success: #389e0d;
+  --warning: #d48806;
+  --danger: #cf1322;
+  --info: #0958d9;
+  /* shadcn 组件用 destructive，与 danger 同源 */
+  --destructive: var(--danger);
+
+  /* ---- 描边 / 填充 / 文字层级 ---- */
+  --border: #d9d9d9;
+  --border-secondary: #f0f0f0;
+  --input: #d9d9d9;
+  --ring: var(--primary);
+  --text-quaternary: rgba(0, 0, 0, 0.25);
+  --fill: rgba(0, 0, 0, 0.15);
+  --fill-secondary: rgba(0, 0, 0, 0.06);
+  --fill-tertiary: rgba(0, 0, 0, 0.04);
+  --fill-quaternary: rgba(0, 0, 0, 0.02);
+
+  /* ---- 主色派生：跟随运行时写入的 --primary ---- */
+  --primary-soft: color-mix(in oklab, var(--primary) 9%, var(--background));
+  --primary-soft-hover: color-mix(
+    in oklab,
+    var(--primary) 22%,
+    var(--background)
+  );
+  --primary-border: color-mix(in oklab, var(--primary) 42%, var(--background));
+  --primary-hover-fill: color-mix(in oklab, var(--primary) 82%, white);
+  --primary-active-fill: color-mix(in oklab, var(--primary) 84%, black);
+
+  /* ---- 状态色浅底 / 描边 ---- */
+  --success-soft: color-mix(in oklab, var(--success) 12%, var(--background));
+  --success-border: color-mix(in oklab, var(--success) 34%, var(--background));
+  --warning-soft: color-mix(in oklab, var(--warning) 12%, var(--background));
+  --warning-border: color-mix(in oklab, var(--warning) 34%, var(--background));
+  --danger-soft: color-mix(in oklab, var(--danger) 10%, var(--background));
+  --danger-border: color-mix(in oklab, var(--danger) 30%, var(--background));
+  --info-soft: color-mix(in oklab, var(--info) 12%, var(--background));
+  --info-border: color-mix(in oklab, var(--info) 34%, var(--background));
+
+  /* ---- 布局尺寸 ---- */
+  --sidebar-width: 232px;
+  --header-height: 56px;
+  /* 内容区内边距：紧凑模式会调小 */
+  --page-pad: 1rem;
+
+  /* ---- 侧边栏配色 ---- */
+  --sidebar: #ffffff;
+  --sidebar-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-accent: rgba(0, 0, 0, 0.04);
+  --sidebar-accent-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-border: #d9d9d9;
+}
+
+.dark {
+  --background: #141414;
+  --foreground: rgba(255, 255, 255, 0.85);
+  --card: #1f1f1f;
+  --card-foreground: rgba(255, 255, 255, 0.85);
+  --popover: #1f1f1f;
+  --popover-foreground: rgba(255, 255, 255, 0.85);
+  --secondary: #1f1f1f;
+  --secondary-foreground: rgba(255, 255, 255, 0.85);
+  --muted: #262626;
+  --muted-foreground: rgba(255, 255, 255, 0.65);
+  --accent: #424242;
+  --accent-foreground: rgba(255, 255, 255, 0.85);
+  --success: #49aa19;
+  --warning: #d89614;
+  --danger: #dc4446;
+  --info: #1668dc;
+  --destructive: var(--danger);
+  --border: #424242;
+  --border-secondary: #303030;
+  --input: #424242;
+  --text-quaternary: rgba(255, 255, 255, 0.25);
+  --fill: rgba(255, 255, 255, 0.15);
+  --fill-secondary: rgba(255, 255, 255, 0.08);
+  --fill-tertiary: rgba(255, 255, 255, 0.04);
+  --fill-quaternary: rgba(255, 255, 255, 0.02);
+  --sidebar: #1f1f1f;
+  --sidebar-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.85);
+  --sidebar-border: #303030;
+}
+
+/* 双列 / 分栏布局 + 暗色侧栏范围 = 仅第一列：第二列覆盖回浅色侧栏配色
+   （取值与上方 :root 的浅色侧栏保持一致，theme-runtime 只负责切换 data 属性） */
+[data-sidebar-scope='first'] [data-variant='secondary'] {
+  --sidebar: #ffffff;
+  --sidebar-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-accent: rgba(0, 0, 0, 0.04);
+  --sidebar-accent-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-border: #d9d9d9;
+}
+
+@theme inline {
+  /* 统一控件高度：按钮 / 输入框 / 选择器 / 页签条等表单控件共用（等价原 h-8） */
+  --spacing-control: 2rem;
+
+  /* 圆角：antd 的 4 / 6 / 8 阶梯（sm / base / lg） */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-hover: var(--primary-soft-hover);
+  --color-primary-border: var(--primary-border);
+  --color-primary-hover-fill: var(--primary-hover-fill);
+  --color-primary-active-fill: var(--primary-active-fill);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-success-soft: var(--success-soft);
+  --color-success-border: var(--success-border);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-border: var(--warning-border);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-border: var(--danger-border);
+  --color-info-soft: var(--info-soft);
+  --color-info-border: var(--info-border);
+  --color-border: var(--border);
+  --color-border-secondary: var(--border-secondary);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-quaternary: var(--text-quaternary);
+  --color-fill: var(--fill);
+  --color-fill-secondary: var(--fill-secondary);
+  --color-fill-tertiary: var(--fill-tertiary);
+  --color-fill-quaternary: var(--fill-quaternary);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  /* 侧边栏描边色：侧栏内的分隔线与折叠把手的 SVG 描边共用。
+     不能省略：裸 border-* 在 Tailwind v4 里取 currentColor，
+     暗色侧栏的浅色文字会把边框带成刺眼的浅色线 */
+  --color-sidebar-border: var(--sidebar-border);
+
+  --font-heading: var(--font-sans);
+  --font-sans:
+    'Geist Variable', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+/* 原生滚动容器：隐藏滚动条但保留滚动能力，用于顶栏 / 页签栏这类紧凑横向区域 */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 14px;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 24%, transparent);
+  }
+
+  /* 滚动条：Chrome / Safari / Edge 用细条 + 主题色拇指（Firefox 不解析
+     webkit 选择器，命中不了这个 @supports，保持系统原生滚动条不动）；
+     标准属性给 Chrome 121+，webkit 伪元素兜底给老版 Safari / Chrome，
+     支持标准属性的浏览器会忽略伪元素规则，不会重复生效 */
+  @supports selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in oklab, var(--foreground) 30%, transparent)
+        transparent;
+    }
+
+    *::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+    *::-webkit-scrollbar-thumb {
+      border-radius: 9999px;
+      background-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+    }
+    *::-webkit-scrollbar-thumb:hover {
+      background-color: color-mix(in oklab, var(--foreground) 45%, transparent);
+    }
+  }
+
+  /* 键盘导航时的统一焦点环，鼠标点击不显示 */
+  :focus-visible {
+    outline: none;
+  }
+}
+
+/* ---- @rc-component/table（表格引擎）基础布局 ----
+   rc-table 自带的 assets/index.css 是带红框的调试样式，不引入；
+   这里只保留固定列 / 吸顶表头必需的定位与主题规则，
+   边框、内边距、配色由 GridTable 的 classNames 接管。 */
+.rc-table table {
+  border-collapse: separate;
+  /* separate 下 UA 默认是 2px，必须归零 */
+  border-spacing: 0;
+}
+
+.rc-table-measure-row {
+  visibility: collapse;
+}
+
+/* 卡片用 clip 而非 hidden：hidden 会建立滚动容器，吸顶表头只能停在卡片内 */
+.rc-grid-card {
+  overflow: clip;
+}
+
+/* 吸顶表头：sticky 的 top 基准是滚动容器的内容盒，用负的页面内边距贴齐顶边；
+   内容区的内边距会随紧凑模式变化，这里直接跟随 --page-pad */
+.rc-grid .rc-table-sticky-holder {
+  position: sticky;
+  top: calc(-1 * var(--page-pad)) !important;
+  z-index: 20;
+}
+
+/* 固定列：偏移量由 rc-table 内联 inset 写入，position / 层级 / 实底在这里补 */
+.rc-table-cell-fix-start,
+.rc-table-cell-fix-end {
+  position: sticky;
+  z-index: calc(2 + var(--z-offset));
+}
+
+.rc-table-tbody .rc-table-cell-fix-start,
+.rc-table-tbody .rc-table-cell-fix-end {
+  background: var(--card);
+}
+
+/* 固定区边界只画在固定区的最后一列 / 最前一列 */
+.rc-grid .rc-table-cell-fix-start-shadow {
+  border-inline-end: 1px solid var(--border);
+}
+.rc-grid .rc-table-cell-fix-end-shadow {
+  border-inline-start: 1px solid var(--border);
+}
+
+.rc-grid .rc-table-cell-fix-end:last-child {
+  border-inline-end: 0;
+}
+
+/* 网格模式下普通单元格已有右边框，固定边界无需再叠加一条 */
+.rc-grid-border-grid .rc-table-cell-fix-end-shadow {
+  border-inline-start: 0;
+}
+
+/* 行悬停 / 选中直接作用到单元格，固定列的实底也会一起变化 */
+.rc-grid .rc-table-tbody .rc-table-row:hover > .rc-table-cell {
+  background: color-mix(in oklab, var(--muted) 40%, var(--card));
+}
+.rc-grid .rc-table-tbody .rc-table-row.rc-grid-row-selected > .rc-table-cell {
+  background: color-mix(in oklab, var(--primary) 10%, var(--card));
+}
+
+/* 最后一行的底边由卡片收口 */
+.rc-grid .rc-table-tbody > .rc-table-row:last-child > .rc-table-cell {
+  border-bottom-width: 0;
+}
+
+/* 横向滚动交给 .rc-table-body 的浏览器原生滚动条；
+   rc-table 在 sticky 表头模式下自绘的吸底滚动条不是原生控件，隐藏它 */
+.rc-grid .rc-table-sticky-scroll {
+  display: none;
+}
+
+/* ---- 树形行的展开图标 ----
+   rc-table 只渲染空 span，外观完全交给宿主；
+   视觉为轻量 chevron：折叠朝右、展开旋转朝下，悬停浮出浅底。
+   注意 @rc-component/table v8 的状态类是 rc-table-row-{expanded|collapsed}。
+   叶子行（rc-table-row-spaced）不渲染可见图标，但占位保留——
+   每行文本都从「缩进 + 图标槽」之后开始，父子层级由缩进逐级表达。 */
+.rc-table-row-expand-icon {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  margin-inline-end: 8px;
+  border-radius: 5px;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  vertical-align: middle;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+.rc-table-row-expand-icon:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+.rc-table-row-expand-icon:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+/* chevron：右下双边框旋转 -45°（朝右）/ 45°（朝下） */
+.rc-table-row-expand-icon::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 4.5px;
+  height: 4.5px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s;
+}
+.rc-table-row-expand-icon.rc-table-row-expanded::after {
+  transform: rotate(45deg);
+}
+.rc-table-row-expand-icon.rc-table-row-spaced {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- 全局扩展模式 ---- */
+html.gray-mode body {
+  filter: grayscale(1);
+}
+html.color-weak body {
+  filter: invert(0.85) hue-rotate(180deg);
+}
+html.gray-mode.color-weak body {
+  filter: grayscale(1) invert(0.85) hue-rotate(180deg);
+}
+
+/* 紧凑模式：收紧内容区内边距与表格行高 */
+html.compact-mode {
+  --page-pad: 0.625rem;
+}
+
+/* 内容宽度（fluid / boxed）：定宽时内容居中并限制最大宽度 */
+[data-content-width='boxed'] [data-slot='app-main'] > * {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* 水印 */
+.watermark-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-repeat: repeat;
+}
+
+/* 页面切换动画：.page-enter 由滚动显隐的容器承载（每次 key 变化重新挂载）。
+   不能用 both 填充：动画结束后残留的 identity transform 会成为后代 fixed
+   元素的包含块，破坏「钉住视口」类定位（如表格选中胶囊的 viewport 策略），
+   因此结束后用 forwards 前的 to 帧即 none 收尾——由 animation 自然移除。 */
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter {
+    animation: page-enter 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* 登录卡片边框流光：仅在启用流光 class 的登录风格使用 */
+@property --login-flow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes login-flow-border {
+  to {
+    --login-flow-angle: 360deg;
+  }
+}
+
+.login-flow-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.login-flow-border::after {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--login-flow-angle),
+    transparent 0deg 56deg,
+    color-mix(in oklab, var(--primary) 35%, transparent) 88deg,
+    var(--primary) 132deg,
+    rgb(255 255 255 / 0.95) 150deg,
+    color-mix(in oklab, var(--primary) 45%, transparent) 175deg,
+    transparent 218deg 360deg
+  );
+  content: '';
+  pointer-events: none;
+  animation: login-flow-border 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* 尊重系统「减少动态效果」：关闭装饰性动画与过渡 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
