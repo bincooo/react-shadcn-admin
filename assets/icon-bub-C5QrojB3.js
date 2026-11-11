@@ -1,0 +1,6 @@
+import{c as e}from"./icons-D353FYJX.js";import"./react-W0DHfcxy.js";/**
+ * @license lucide-react v1.70.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const c={name:"bubbles",size:24,node:[["path",{d:"M7.001 15.085A1.5 1.5 0 0 1 9 16.5",key:"y44lvh"}],["circle",{cx:"18.5",cy:"8.5",r:"3.5",key:"1wadoa"}],["circle",{cx:"7.5",cy:"16.5",r:"5.5",key:"6mdt3g"}],["circle",{cx:"7.5",cy:"4.5",r:"2.5",key:"637s54"}]]};c.node;const a=e(c);export{c as __iconData,a as default};

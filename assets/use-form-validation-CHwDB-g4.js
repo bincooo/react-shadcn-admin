@@ -1,0 +1,1 @@
+import{r as n}from"./react-W0DHfcxy.js";function b(e,r){const[a,i]=n.useState(!1),t=a?r(e):{};return{errors:t,validateBeforeSubmit:()=>(i(!0),Object.keys(r(e)).length===0),getFieldProps:(o,s)=>({id:s,"aria-invalid":!!t[o],"aria-describedby":t[o]?`${s}-error`:void 0})}}export{b as u};

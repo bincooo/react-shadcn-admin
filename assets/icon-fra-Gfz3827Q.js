@@ -1,0 +1,6 @@
+import{c as y}from"./icons-D353FYJX.js";import"./react-W0DHfcxy.js";/**
+ * @license lucide-react v1.70.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const e={name:"frame",size:24,node:[["line",{x1:"22",x2:"2",y1:"6",y2:"6",key:"15w7dq"}],["line",{x1:"22",x2:"2",y1:"18",y2:"18",key:"1ip48p"}],["line",{x1:"6",x2:"6",y1:"2",y2:"22",key:"a2lnyx"}],["line",{x1:"18",x2:"18",y1:"2",y2:"22",key:"8vb6jd"}]]};e.node;const i=y(e);export{e as __iconData,i as default};

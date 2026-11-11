@@ -1,0 +1,1 @@
+import{X as r,Y as n,Z as a,_ as p}from"./index-B1HpfwNi.js";function u(){return p("/departments/tree")}function d(e){return a("/departments",e)}function o(e,t){return n(`/departments/${e}`,t)}function c(e){return r(`/departments/${e}`)}export{d as c,c as d,u as f,o as u};

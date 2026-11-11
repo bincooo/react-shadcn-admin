@@ -1,0 +1,6 @@
+import{c}from"./icons-D353FYJX.js";import"./react-W0DHfcxy.js";/**
+ * @license lucide-react v1.70.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const e={name:"anchor",size:24,node:[["path",{d:"M12 6v16",key:"nqf5sj"}],["path",{d:"m19 13 2-1a9 9 0 0 1-18 0l2 1",key:"y7qv08"}],["path",{d:"M9 11h6",key:"1fldmi"}],["circle",{cx:"12",cy:"4",r:"2",key:"muu5ef"}]]};e.node;const t=c(e);export{e as __iconData,t as default};
