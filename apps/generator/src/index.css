@@ -1,0 +1,215 @@
+@import '@repo/ui/globals.css';
+
+@source '../../../packages/ui/src/**/*.{ts,tsx}';
+@source './**/*.{ts,tsx}';
+
+/*
+ * 直角设计：生成器是偏工具型界面，统一关闭圆角并压缩间距。
+ * 圆角 token 置零 + 兜底覆盖 @repo/ui 组件里的 rounded-* 工具类。
+ */
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+@layer base {
+  :root {
+    --radius: 0px;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 13px;
+    line-height: 1.45;
+    overscroll-behavior-y: none;
+  }
+
+  /* 全局滚动条：细条 + 主题色拇指。标准属性给 Chrome 121+ / Firefox，
+     webkit 伪元素兜底老版 Safari / Chrome（支持标准属性的浏览器会忽略
+     伪元素规则，不会重复生效）。 */
+  @supports selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in oklab, var(--foreground) 30%, transparent)
+        transparent;
+    }
+
+    *::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border-radius: 9999px;
+      background-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+      background-color: color-mix(in oklab, var(--foreground) 45%, transparent);
+    }
+  }
+
+  pre,
+  code {
+    font-family:
+      'SFMono-Regular', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas,
+      'Liberation Mono', monospace;
+  }
+}
+
+@layer utilities {
+  [class*='rounded'] {
+    border-radius: 0;
+  }
+}
+
+/* 原生滚动容器：隐藏滚动条但保留滚动能力，用于页签栏这类紧凑横向区域 */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.code-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--foreground) 22%, transparent)
+    transparent;
+}
+
+.code-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.code-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--foreground) 22%, transparent);
+}
+
+.code-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+/* 代码预览：轻量语法高亮配色（浅色 / 深色共用同一组 token） */
+:root {
+  --tok-comment: #64748b;
+  --tok-string: #047857;
+  --tok-keyword: #7c3aed;
+  --tok-type: #1d4ed8;
+  --tok-number: #b45309;
+  --tok-annotation: #be123c;
+  --tok-constant: #9a3412;
+  --tok-key: #0369a1;
+  --tok-boolean: #7c3aed;
+  --tok-identifier: #0f766e;
+  --tok-heading: #1d4ed8;
+  --tok-link: #0369a1;
+}
+
+.dark {
+  --tok-comment: #94a3b8;
+  --tok-string: #86efac;
+  --tok-keyword: #c4b5fd;
+  --tok-type: #93c5fd;
+  --tok-number: #fcd34d;
+  --tok-annotation: #fda4af;
+  --tok-constant: #fdba74;
+  --tok-key: #7dd3fc;
+  --tok-boolean: #c4b5fd;
+  --tok-identifier: #5eead4;
+  --tok-heading: #93c5fd;
+  --tok-link: #7dd3fc;
+}
+
+.code-surface {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--muted) 42%, var(--background));
+}
+
+.dark .code-surface {
+  background: color-mix(in oklab, #000 32%, var(--background));
+}
+
+.tok-comment {
+  font-style: italic;
+  color: var(--tok-comment);
+}
+
+.tok-string {
+  color: var(--tok-string);
+}
+
+.tok-keyword {
+  font-weight: 600;
+  color: var(--tok-keyword);
+}
+
+.tok-type {
+  color: var(--tok-type);
+}
+
+.tok-number {
+  color: var(--tok-number);
+}
+
+.tok-annotation {
+  color: var(--tok-annotation);
+}
+
+.tok-constant {
+  color: var(--tok-constant);
+}
+
+.tok-key {
+  color: var(--tok-key);
+}
+
+.tok-boolean {
+  color: var(--tok-boolean);
+}
+
+.tok-identifier {
+  color: var(--tok-identifier);
+}
+
+.tok-heading {
+  font-weight: 700;
+  color: var(--tok-heading);
+}
+
+.tok-quote {
+  font-style: italic;
+  color: var(--tok-comment);
+}
+
+.tok-list {
+  color: var(--tok-keyword);
+}
+
+.tok-inlinecode {
+  color: var(--tok-string);
+  background: color-mix(in oklab, var(--muted) 65%, transparent);
+}
+
+.tok-emphasis {
+  font-weight: 700;
+}
+
+.tok-link {
+  color: var(--tok-link);
+  text-decoration: underline;
+}
+
+.tok-codeblock {
+  color: var(--tok-string);
+}

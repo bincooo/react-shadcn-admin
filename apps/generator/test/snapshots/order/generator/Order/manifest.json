@@ -1,0 +1,83 @@
+{
+  "generator": "react-admin/apps/generator",
+  "generatedAt": "<TIMESTAMP>",
+  "table": "sys_order",
+  "entity": "Order",
+  "entityId": "OrderId",
+  "module": "order",
+  "basePackage": "com.example.ddd",
+  "route": "order",
+  "dialects": [
+    "mysql",
+    "postgres",
+    "sqlserver",
+    "oracle"
+  ],
+  "fileCount": 33,
+  "files": [
+    "ddd-application/src/main/java/com/example/ddd/application/order/command/CreateOrderCommand.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/command/QueryOrderCommand.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/command/UpdateOrderCommand.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/dto/OrderDTO.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/loader/OrderLoader.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/query/OrderQueryService.java",
+    "ddd-application/src/main/java/com/example/ddd/application/order/service/OrderCommandService.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/event/OrderCreatedEvent.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/exception/OrderDomainException.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/exception/OrderNotFoundException.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/model/Order.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/model/OrderId.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/model/OrderStatus.java",
+    "ddd-domain/src/main/java/com/example/ddd/domain/order/repository/OrderRepository.java",
+    "ddd-infrastructure/src/main/java/com/example/ddd/infrastructure/order/persistence/adapter/MybatisPlusOrderRepositoryAdapter.java",
+    "ddd-infrastructure/src/main/java/com/example/ddd/infrastructure/order/persistence/converter/OrderPersistenceConverter.java",
+    "ddd-infrastructure/src/main/java/com/example/ddd/infrastructure/order/persistence/mapper/OrderMapper.java",
+    "ddd-infrastructure/src/main/java/com/example/ddd/infrastructure/order/persistence/po/OrderPO.java",
+    "ddd-infrastructure/src/main/resources/db/generated/mysql/sys_order.sql",
+    "ddd-infrastructure/src/main/resources/db/generated/oracle/sys_order.sql",
+    "ddd-infrastructure/src/main/resources/db/generated/postgres/sys_order.sql",
+    "ddd-infrastructure/src/main/resources/db/generated/sqlserver/sys_order.sql",
+    "ddd-interfaces/src/main/java/com/example/ddd/interfaces/web/order/controller/OrderController.java",
+    "ddd-interfaces/src/main/java/com/example/ddd/interfaces/web/order/request/CreateOrderRequest.java",
+    "ddd-interfaces/src/main/java/com/example/ddd/interfaces/web/order/request/QueryOrderRequest.java",
+    "ddd-interfaces/src/main/java/com/example/ddd/interfaces/web/order/request/UpdateOrderRequest.java",
+    "frontend/order/order/api.ts",
+    "frontend/order/order/index.tsx",
+    "frontend/order/order/modules/dialog.tsx",
+    "frontend/order/order/modules/table.tsx",
+    "frontend/order/order/modules/use-order.ts",
+    "frontend/order/order/types.ts",
+    "generator/Order/README.md"
+  ],
+  "sql": {
+    "mysql": "ddd-infrastructure/src/main/resources/db/generated/mysql/sys_order.sql",
+    "postgres": "ddd-infrastructure/src/main/resources/db/generated/postgres/sys_order.sql",
+    "sqlserver": "ddd-infrastructure/src/main/resources/db/generated/sqlserver/sys_order.sql",
+    "oracle": "ddd-infrastructure/src/main/resources/db/generated/oracle/sys_order.sql"
+  },
+  "frontend": {
+    "enabled": true,
+    "files": [
+      "frontend/order/order/api.ts",
+      "frontend/order/order/index.tsx",
+      "frontend/order/order/modules/dialog.tsx",
+      "frontend/order/order/modules/table.tsx",
+      "frontend/order/order/modules/use-order.ts",
+      "frontend/order/order/types.ts"
+    ]
+  },
+  "details": [],
+  "sharedDependencies": [
+    "com.example.ddd.domain.shared.AggregateRoot",
+    "com.example.ddd.domain.shared.DomainEvent",
+    "com.example.ddd.domain.shared.DomainException",
+    "com.example.ddd.domain.shared.NotFoundException",
+    "com.example.ddd.domain.shared.PageQuery",
+    "com.example.ddd.domain.shared.PageResult",
+    "com.example.ddd.domain.shared.SnowflakeIdGenerator",
+    "com.example.ddd.application.shared.PageDTO",
+    "com.example.ddd.application.shared.Loaders",
+    "com.example.ddd.application.shared.DomainEventPublisher",
+    "com.example.ddd.infrastructure.persistence.support.PageResults"
+  ]
+}

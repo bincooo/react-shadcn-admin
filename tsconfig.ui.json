@@ -1,0 +1,5 @@
+{
+  "extends": "./packages/ui/tsconfig.json",
+  "include": ["packages/ui/src"],
+  "exclude": ["packages/ui/src/components/sonner.tsx"]
+}

@@ -1,0 +1,71 @@
+@import "@repo/ui/globals.css";
+@import "@repo/table/styles.css";
+@import "./styles/global.css";
+@import "./styles/login.css";
+
+@source "../../../packages/ui/src/**/*.{ts,tsx}";
+@source "../../../packages/core/table/src/**/*.{ts,tsx}";
+@source "../../../packages/core/tree/src/**/*.{ts,tsx}";
+@source "./**/*.{ts,tsx}";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * 设计令牌对齐 antd v5（覆盖 @repo/ui 默认 oklch 主题）。
+ * 主题面板通过 applyTheme() 覆写这些值。
+ */
+:root {
+  --radius: 0.375rem;
+
+  --background: #ffffff;
+  --foreground: rgba(0, 0, 0, 0.88);
+  --card: #ffffff;
+  --card-foreground: rgba(0, 0, 0, 0.88);
+  --popover: #ffffff;
+  --popover-foreground: rgba(0, 0, 0, 0.88);
+  --primary: #1677ff;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: rgba(0, 0, 0, 0.88);
+  --muted: #f5f5f5;
+  --muted-foreground: rgba(0, 0, 0, 0.65);
+  --accent: #f5f5f5;
+  --accent-foreground: rgba(0, 0, 0, 0.88);
+
+  --success: #389e0d;
+  --warning: #d48806;
+  --danger: #cf1322;
+  --destructive: #cf1322;
+  --info: #0958d9;
+
+  --border: #d9d9d9;
+  --input: #d9d9d9;
+  --ring: #1677ff;
+
+  --sidebar-width: 232px;
+  --header-height: 56px;
+  --page-pad: 1rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-accent: rgba(0, 0, 0, 0.04);
+  --sidebar-border: #d9d9d9;
+}
+
+.dark {
+  --background: #141414;
+  --foreground: rgba(255, 255, 255, 0.85);
+  --card: #1f1f1f;
+  --card-foreground: rgba(255, 255, 255, 0.85);
+  --popover: #1f1f1f;
+  --popover-foreground: rgba(255, 255, 255, 0.85);
+  --secondary: #1f1f1f;
+  --secondary-foreground: rgba(255, 255, 255, 0.85);
+  --muted: #262626;
+  --muted-foreground: rgba(255, 255, 255, 0.65);
+  --accent: #262626;
+  --accent-foreground: rgba(255, 255, 255, 0.85);
+  --border: #424242;
+  --input: #424242;
+  --destructive: #ff4d4f;
+}

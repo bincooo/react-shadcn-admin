@@ -1,0 +1,46 @@
+{
+  "name": "playground",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5173",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource-variable/geist": "catalog:",
+    "@repo/table": "workspace:*",
+    "@repo/tree": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "catalog:",
+    "echarts": "catalog:",
+    "i18next": "catalog:",
+    "keepalive-for-react": "catalog:",
+    "ky": "catalog:",
+    "lucide-react": "catalog:",
+    "motion": "catalog:",
+    "pinyin-pro": "catalog:",
+    "react": "catalog:",
+    "react-countup": "catalog:",
+    "react-dom": "catalog:",
+    "react-error-boundary": "catalog:",
+    "react-i18next": "catalog:",
+    "react-router": "catalog:",
+    "sonner": "catalog:",
+    "tw-animate-css": "catalog:",
+    "zustand": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-fake-server": "catalog:"
+  }
+}

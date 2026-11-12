@@ -1,0 +1,174 @@
+@theme inline {
+  /* 圆角：以运行时写入的 --radius 为基准的 antd 阶梯 */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: #ffffff;
+  --color-primary-hover-fill: color-mix(in oklab, var(--primary) 82%, white);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  /* 侧边栏描边色：侧栏内的分隔线与折叠把手的 SVG 描边共用 */
+  --color-sidebar-border: var(--sidebar-border);
+
+  --font-heading: var(--font-sans);
+  --font-sans:
+    'Geist Variable', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+/* 原生滚动容器：隐藏滚动条但保留滚动能力，用于顶栏 / 页签栏这类紧凑横向区域 */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-size: 14px;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 24%, transparent);
+  }
+
+  /* 滚动条：Chrome / Safari / Edge 用细条 + 主题色拇指（Firefox 不解析
+     webkit 选择器，命中不了这个 @supports，保持系统原生滚动条不动）；
+     标准属性给 Chrome 121+，webkit 伪元素兜底给老版 Safari / Chrome，
+     支持标准属性的浏览器会忽略伪元素规则，不会重复生效 */
+  @supports selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in oklab, var(--foreground) 30%, transparent)
+        transparent;
+    }
+
+    *::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+    *::-webkit-scrollbar-thumb {
+      border-radius: 9999px;
+      background-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+    }
+    *::-webkit-scrollbar-thumb:hover {
+      background-color: color-mix(in oklab, var(--foreground) 45%, transparent);
+    }
+  }
+
+  /* 键盘导航时的统一焦点环，鼠标点击不显示 */
+  :focus-visible {
+    outline: none;
+  }
+}
+
+/* 双列 / 分栏布局 + 暗色侧栏范围 = 仅第一列：第二列覆盖回浅色侧栏配色
+   （取值与上方 :root 的浅色侧栏保持一致，theme-runtime 只负责切换 data 属性） */
+[data-sidebar-scope='first'] [data-variant='secondary'] {
+  --sidebar: #ffffff;
+  --sidebar-foreground: rgba(0, 0, 0, 0.88);
+  --sidebar-accent: rgba(0, 0, 0, 0.04);
+  --sidebar-border: #d9d9d9;
+}
+
+/* ---- 全局扩展模式 ---- */
+html.gray-mode body {
+  filter: grayscale(1);
+}
+html.color-weak body {
+  filter: invert(0.85) hue-rotate(180deg);
+}
+html.gray-mode.color-weak body {
+  filter: grayscale(1) invert(0.85) hue-rotate(180deg);
+}
+
+/* 内容宽度（fluid / boxed）：定宽时内容居中并限制最大宽度 */
+[data-content-width='boxed'] [data-slot='app-main'] > * {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* 水印 */
+.watermark-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/*
+ * 页面内容错峰：作用于路由容器的「页面根节点 → 直接子区块」。
+ * 复用 tw-animate-css 的 enter keyframes；backwards 让延迟期间保持起始位移，
+ * 避免延迟开始时元素先闪现再移动。整体由父级 animate-in 负责淡入。
+ */
+@utility page-stagger {
+  & > * > * {
+    animation: enter 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+    --tw-enter-translate-y: 4px;
+  }
+  & > * > :nth-child(2) {
+    animation-delay: 30ms;
+  }
+  & > * > :nth-child(3) {
+    animation-delay: 60ms;
+  }
+  & > * > :nth-child(4) {
+    animation-delay: 90ms;
+  }
+  & > * > :nth-child(5) {
+    animation-delay: 120ms;
+  }
+  & > * > :nth-child(6) {
+    animation-delay: 150ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    & > * > * {
+      animation: none;
+    }
+  }
+}

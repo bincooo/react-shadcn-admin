@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Backend Generator</title>
+  <rect width="64" height="64" rx="14" fill="#1677ff" />
+  <path d="M18 20h28M18 30h18M18 40h28M18 50h18" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+  <circle cx="46" cy="30" r="3.5" fill="#fff" />
+  <circle cx="46" cy="50" r="3.5" fill="#fff" />
+</svg>

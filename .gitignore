@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+.cache/
+.npm/
+.tooling/
+.local/
+*.log
+scripts/*.png
+.DS_Store

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.6/schema.json",
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!!**/node_modules",
+      "!!**/dist",
+      "!!.tooling",
+      "!!.cache",
+      "!!apps/generator/data",
+      "!!apps/generator/output",
+      "!!apps/generator/test/snapshots"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "asNeeded"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off"
+      }
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/core/table/src/column-settings-popover.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noLabelWithoutControl": "off",
+            "useFocusableInteractive": "off",
+            "useSemanticElements": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/core/table/src/compile-columns.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useKeyWithClickEvents": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/core/table/src/tanstack-table.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noAriaHiddenOnFocusable": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/ui/src/components/label.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noLabelWithoutControl": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/ui/src/components/field.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "off"
+          },
+          "suspicious": {
+            "noDoubleEquals": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/ui/**"],
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": ["apps/generator/test/tokenizer.test.mjs"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noTemplateCurlyInString": "off"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+@import './table.css';
+/* @repo/table — TanStack Table surface tokens & styles */
+
+:root {
+  --table-header-bg: var(--muted);
+  --table-header-hover-bg: color-mix(in oklch, var(--muted) 92%, var(--foreground));
+  --table-row-bg: var(--card);
+  --table-row-stripe-bg: color-mix(in oklch, var(--card) 45%, var(--muted));
+  --table-row-hover-bg: color-mix(in srgb, var(--card) 95%, var(--primary));
+  --table-row-selected-bg: color-mix(in srgb, var(--card) 90%, var(--primary));
+  --table-row-selected-hover-bg: color-mix(in srgb, var(--card) 86%, var(--primary));
+  --table-expanded-bg: color-mix(in oklch, var(--card) 35%, var(--muted));
+  --table-border-color: var(--border);
+
+  /* AG-Grid Alpine-style header palette */
+  --table-group-header-bg: var(--table-header-bg);
+  --table-leaf-header-bg: var(--table-header-bg);
+  --table-leaf-header-hover-bg: var(--table-header-bg);
+  --table-filter-row-bg: var(--table-header-bg);
+  --table-header-text: color-mix(in oklch, var(--foreground) 82%, var(--card));
+  --table-header-icon: color-mix(in oklch, var(--foreground) 45%, var(--card));
+  --table-filter-input-bg: color-mix(in oklch, var(--foreground) 4%, var(--card));
+  --table-filter-input-border: color-mix(in oklch, var(--foreground) 22%, var(--card));
+}
+
+.dark {
+  --table-header-bg: color-mix(in oklch, var(--card) 35%, var(--muted));
+  --table-header-hover-bg: color-mix(in oklch, var(--muted) 88%, var(--foreground));
+  --table-row-bg: var(--card);
+  --table-row-stripe-bg: color-mix(in oklch, var(--card) 72%, var(--muted));
+  --table-row-hover-bg: color-mix(in srgb, var(--card) 86%, var(--primary));
+  --table-row-selected-bg: color-mix(in srgb, var(--card) 74%, var(--primary));
+  --table-row-selected-hover-bg: color-mix(in srgb, var(--card) 64%, var(--primary));
+  --table-expanded-bg: color-mix(in oklch, var(--background) 60%, var(--card));
+  --table-border-color: var(--border);
+
+  /* AG-Grid Alpine-style header palette (dark) */
+  --table-group-header-bg: var(--table-header-bg);
+  --table-leaf-header-bg: var(--table-header-bg);
+  --table-leaf-header-hover-bg: var(--table-header-bg);
+  --table-filter-row-bg: var(--table-header-bg);
+  --table-header-text: color-mix(in oklch, var(--foreground) 88%, var(--card));
+  --table-header-icon: color-mix(in oklch, var(--foreground) 55%, var(--card));
+  --table-filter-input-bg: color-mix(in oklch, var(--foreground) 6%, var(--card));
+  --table-filter-input-border: color-mix(in oklch, var(--foreground) 25%, var(--card));
+}

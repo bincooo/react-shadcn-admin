@@ -1,0 +1,188 @@
+/* Fixed column edge shadows */
+.tanstack-table-pin-left-shadow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  right: 0;
+  width: 24px;
+  transform: translateX(100%);
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  box-shadow: inset 10px 0 8px -8px rgba(5, 5, 5, 0.13);
+}
+
+.dark .tanstack-table-pin-left-shadow::after {
+  box-shadow: inset 12px 0 10px -8px rgba(0, 0, 0, 0.62);
+}
+
+.tanstack-table-pin-left-shadow-active::after {
+  opacity: 1;
+}
+
+.tanstack-table-pin-right-shadow::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: 0;
+  width: 24px;
+  transform: translateX(-100%);
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  box-shadow: inset -10px 0 8px -8px rgba(5, 5, 5, 0.13);
+}
+
+.dark .tanstack-table-pin-right-shadow::before {
+  box-shadow: inset -12px 0 10px -8px rgba(0, 0, 0, 0.62);
+}
+
+.tanstack-table-pin-right-shadow-active::before {
+  opacity: 1;
+}
+
+/* Opaque cell surface classes that respond smoothly to row hover & selection */
+.tanstack-table-th-surface {
+  background-color: var(--table-header-bg);
+}
+
+/* Unified AG-Grid-style header surface, including pinned cells and filter row */
+.tanstack-table-th {
+  color: var(--table-header-text);
+  font-weight: 600;
+}
+.tanstack-table-th-group {
+  background-color: var(--table-group-header-bg);
+}
+.tanstack-table-th-leaf {
+  background-color: var(--table-leaf-header-bg);
+}
+.tanstack-table-th-leaf.tanstack-table-th-sortable:hover {
+  background-color: var(--table-leaf-header-hover-bg);
+}
+
+/* Shared header icon treatment for column menus and floating filters. */
+.tanstack-table-header-icon-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 24px;
+  border-radius: 3px;
+  color: var(--table-header-icon);
+  transition: color 120ms ease, background-color 120ms ease;
+}
+.tanstack-table-header-icon-button:hover {
+  color: var(--table-header-text);
+  background-color: color-mix(in oklch, var(--foreground) 7%, transparent);
+}
+.tanstack-table-header-icon-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.tanstack-table-header-icon-button.tanstack-table-header-icon-active,
+.tanstack-table-header-icon-button.tanstack-table-header-icon-active:hover {
+  color: var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 10%, transparent);
+}
+
+/* Short, inset separators like AG Grid, even when body grid borders are off.
+   A real element (rather than ::before/::after) leaves pinned-column shadows intact. */
+.tanstack-table-header-separator {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 0.05rem;
+  height: 50%;
+  transform: translateY(-50%);
+  background-color: color-mix(in oklch, var(--foreground) 25%, var(--card));
+  pointer-events: none;
+}
+
+/* Floating filter row (input + funnel per filterable column) */
+.tanstack-table-filter-th {
+  background-color: var(--table-filter-row-bg);
+  padding: 5px 6px;
+  font-weight: 400;
+}
+.tanstack-table-filter-cell-inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.tanstack-table-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 26px;
+  padding: 0 7px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--foreground);
+  background-color: var(--table-filter-input-bg);
+  border: 1px solid var(--table-filter-input-border);
+  outline: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.tanstack-table-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--primary) 22%, transparent);
+}
+.tanstack-table-input-active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.tanstack-table-tr-row .tanstack-table-td-surface {
+  background-color: var(--table-row-bg);
+  transition: background-color 0.12s ease;
+}
+.tanstack-table-tr-row.tanstack-table-tr-striped .tanstack-table-td-surface {
+  background-color: var(--table-row-stripe-bg);
+}
+.tanstack-table-tr-row:hover .tanstack-table-td-surface {
+  background-color: var(--table-row-hover-bg);
+}
+.tanstack-table-tr-row.tanstack-table-tr-selected .tanstack-table-td-surface {
+  background-color: var(--table-row-selected-bg);
+}
+.tanstack-table-tr-row.tanstack-table-tr-selected:hover .tanstack-table-td-surface {
+  background-color: var(--table-row-selected-hover-bg);
+}
+
+/* Prevent text selection during column drag resize */
+body.tanstack-table-resizing {
+  user-select: none;
+}
+body.tanstack-table-resizing,
+body.tanstack-table-resizing * {
+  cursor: col-resize;
+}
+
+/* Single active cell border, without affecting column geometry. */
+.tanstack-table-td-surface.tanstack-table-light-cell {
+  outline: 1px solid color-mix(in oklch, var(--primary) 75%, transparent);
+  outline-offset: -1px;
+}
+.tanstack-table-resize-guide {
+  position: absolute;
+  z-index: 60;
+  width: 0;
+  border-left: 1px solid var(--primary);
+  pointer-events: none;
+}
+.tanstack-table-resize-guide-label {
+  position: sticky;
+  top: 4px;
+  display: inline-block;
+  margin-left: 4px;
+  padding: 2px 6px;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+}

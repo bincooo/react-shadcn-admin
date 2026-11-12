@@ -1,0 +1,28 @@
+{
+  "name": "@repo/table",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/styles/index.css"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "@tanstack/react-table": "catalog:",
+    "@tanstack/react-virtual": "catalog:",
+    "lucide-react": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:peer",
+    "react-dom": "catalog:peer"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

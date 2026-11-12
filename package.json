@@ -1,0 +1,29 @@
+{
+  "name": "react-admin",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.18.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "pnpm --filter playground dev",
+    "build": "pnpm --filter playground build",
+    "preview": "pnpm --filter playground preview",
+    "typecheck": "pnpm -r --parallel --filter '!@repo/ui' typecheck && tsc --noEmit -p tsconfig.ui.json",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "pnpm lint && pnpm typecheck",
+    "ui:add": "pnpm --filter @repo/ui ui:add",
+    "dev:generator": "pnpm --filter generator dev",
+    "build:generator": "pnpm --filter generator build",
+    "generate": "node apps/generator/scripts/generate.mjs",
+    "generate:list": "node apps/generator/scripts/generate.mjs --list"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "typescript": "catalog:"
+  }
+}

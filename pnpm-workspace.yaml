@@ -1,0 +1,49 @@
+packages:
+  - "apps/*"
+  - "packages/ui"
+  - "packages/core/*"
+
+catalog:
+  '@base-ui/react': ^1.9.0
+  '@biomejs/biome': ^2.6.6
+  '@fontsource-variable/geist': ^5.3.0
+  '@tailwindcss/vite': ^4.3.5
+  '@tanstack/react-query': ^5.100.10
+  '@tanstack/react-table': ^8.21.3
+  '@tanstack/react-virtual': ^3.14.26
+  '@types/node': ^26.6.6
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
+  '@vitejs/plugin-react': ^4.3.4
+  class-variance-authority: ^0.7.1
+  cn: ^0.4.0
+  echarts: ^6.0.0
+  i18next: ^26.2.0
+  keepalive-for-react: ^5.0.11
+  ky: ^2.2.0
+  lucide-react: ^1.70.0
+  motion: ^12.38.0
+  pinyin-pro: ^3.28.1
+  react: ^19.3.1
+  react-countup: ^6.5.3
+  react-dom: ^19.3.1
+  react-error-boundary: ^6.1.1
+  react-i18next: ^17.0.8
+  react-router: ^7.15.1
+  shadcn: ^4.23.0
+  sonner: ^2.0.8
+  tailwindcss: ^4.3.5
+  tw-animate-css: ^1.4.0
+  typescript: ^5.7.3
+  vite: ^6.2.0
+  vite-plugin-fake-server: ^2.2.4
+  zustand: ^5.0.13
+
+# 包对外声明的 peer 兼容范围与应用实际依赖不同（更宽），单独作为命名 catalog 管理
+catalogs:
+  peer:
+    react: ^19.0.0
+    react-dom: ^19.0.0
+
+onlyBuiltDependencies:
+  - esbuild

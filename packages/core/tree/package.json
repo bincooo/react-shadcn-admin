@@ -1,0 +1,25 @@
+{
+  "name": "@repo/tree",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "lucide-react": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:peer",
+    "react-dom": "catalog:peer"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}
